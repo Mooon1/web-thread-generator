@@ -1,0 +1,2 @@
+- log to get old values from last thread design incase we need a new one
+- autogenerate fields ie for command
