@@ -1,4 +1,10 @@
 let VERSIONS = ['1.16', '1.15', '1.14', '1.13', '1.12', '1.11', '1.10', '1.9', '1.8'];
+let THREAD = {
+    name: 'Some name',
+    version: '1.0.0',
+    supportedVersions: [
+    ]
+};
 
 function createCommandForm() {
     let counter = parseInt($("#commands-counter").html());
@@ -12,16 +18,24 @@ function createCommandForm() {
 };
 
 function finishThread() {
-    $("#d-name").html($("#d-name").html()+'<span>' + $("#name").val() + '</span>');
-    $("#d-version").html($("#d-version").html()+'<span>' + $("#version").val() + '</span>');
+    THREAD.name = $("#d-name").html();
+    $("#d-name").html(THREAD.name+'<span>' + $("#name").val() + '</span>');
+    THREAD.version = $("#d-version").html();
+    $("#d-version").html(THREAD.version+'<span>' + $("#version").val() + '</span>');
 
-    // if($("#v_1_16").prop('checked'))
-
-    let supportedVersions = '';
+    THREAD.supportedVersions = [];
+    let supportedVersionsStr = '';
+    let versionVal;
 
     for (let v in VERSIONS){
-        supportedVersions += $('#v_' + VERSIONS[v].replace(".", "_")).prop('checked') ? '<div class="col-1"><span class="badge bg-success">' + VERSIONS[v] + '</span></div>' : '<div class="col-1"><span class="badge bg-danger">' + VERSIONS[v] + '</span></div>';
+        versionVal = $('#v_' + VERSIONS[v].replace(".", "_")).prop('checked');
+        THREAD.supportedVersions.push({
+            version: VERSIONS[v],
+            supported: versionVal
+        });
+        supportedVersionsStr += versionVal ? '<div class="col-1"><h3><span class="badge rounded-pill bg-success">' + VERSIONS[v] + '</span></h3></div>' : '<div class="col-1"><h3><span class="badge rounded-pill bg-danger">' + VERSIONS[v] + '</span></h3></div>';
     }
 
-    $("#supported-versions").html(supportedVersions);
+    $("#supported-versions").html(supportedVersionsStr);
+    console.log(THREAD);
 };
