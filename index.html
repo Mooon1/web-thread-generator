@@ -31,15 +31,17 @@
                         </div>
                     </div>
                     <div class="row">
-                        <!-- Infos -->
+                        <!-- Name -->
                         <div class="col-6">
                             <label>Name</label>
                             <input type="text" id="name" placeholder="Some name">
                         </div>
+                        <!-- Version -->
                         <div class="col-6">
                             <label>Version</label>
                             <input type="text" id="version" placeholder="1.0.0">
                         </div>
+                        <!-- Description -->
                         <div class="col-12" style="margin-top:25px;margin-bottom:25px;">
                             <label>Description</label>
                             <textarea type="text" id="description" placeholder="Enter a plugin description." style="width:100%;height:100px;"></textarea>
@@ -57,14 +59,22 @@
                             <span id="label_v_1_9">1.9</span> <input type="checkbox" id="v_1_9" value="">
                             <span id="label_v_1_8">1.8</span> <input type="checkbox" id="v_1_8" value="">
                         </div>
+                        <!-- Features -->
+                        <div id="featuers-form" class="row" style="width:100%;background:#eee;margin-top:50px;">
+                            <div class="col-6">
+                                <h6 style="margin-top:25px;">Features (<span id="features-counter" style="font-size: 18pt;">0</span>)</h6>
+                            </div>
+                            <div class="col-6">
+                                <button type="button" onclick="createFeatureForm()" style="height:30px;margin-top:25px;">Add Feature</button>
+                            </div>
+                        </div>
                         <!-- Commands -->
-
-                        <div id="commands-form" class="row" style="width:100%;min-height:300px;">
+                        <div id="commands-form" class="row" style="width:100%;background:#eee;margin-top:50px;">
                             <div class="col-6">
                                 <h6 style="margin-top:25px;">Commands (<span id="commands-counter" style="font-size: 18pt;">0</span>)</h6>
                             </div>
                             <div class="col-6">
-                                <button type="button" onclick="createCommandForm()" style="height:30px;margin-top:25px;">Add</button>
+                                <button type="button" onclick="createCommandForm()" style="height:30px;margin-top:25px;">Add Command</button>
                             </div>
                         </div>
                     </div>
@@ -77,8 +87,8 @@
                 <h3>Supported Versions</h3>
                 <div class="row" id="supported-versions">
                 </div>
-                <h3>Commands</h3>
-                <div id="commands" class="card-group">
+                <div id="commands">
+                    <h3>Commands</h3>
                     <table class="table">
                         <thead>
                         <tr>
@@ -90,6 +100,13 @@
                         <tbody id="commands-table">
                         </tbody>
                     </table>
+                </div>
+                <div id="features" class="row">
+                    <h3>Features</h3>
+                    <div class="col-12">
+                        <div id="features-list" class="list-group">
+                        </div>
+                    </div>
                 </div>
             </div>
             <div class="col-3"></div>
