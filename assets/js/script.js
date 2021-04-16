@@ -16,7 +16,7 @@ function load() {
 
     $.ajax({
         type        : "GET",
-        url         : "/app/index.php?thread=" + name,
+        url         : "app/index.php?thread=" + name,
         beforeSend: function() {
             // setting a timeout
         },
@@ -162,7 +162,7 @@ function finishThread(withSave) {
     if(true === withSave){
         $.ajax({
             type        : "POST",
-            url         : "/app/index.php",
+            url         : "app/index.php",
             data        : THREAD,
             beforeSend: function() {
                 // setting a timeout
