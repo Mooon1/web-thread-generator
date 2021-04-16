@@ -3,6 +3,7 @@ let COMMANDS = 0;
 let THREAD = {
     name: 'Some name',
     version: '1.0.0',
+    description: 'Enter a plugin description.',
     supportedVersions: [
     ],
     commands: []
@@ -21,6 +22,7 @@ function load() {
         data = JSON.parse(data);
         $("#name").val(data.data.name);
         $("#version").val(data.data.version);
+        $("#description").val(data.data.description);
         for (let v in VERSIONS){
             let supported = data.data.supportedVersions[v].supported;
 
@@ -65,6 +67,8 @@ function createCommandForm() {
 function finishThread(withSave) {
     THREAD.name = $("#name").val();
     $("#d-name").html('<span>' + THREAD.name + '</span>');
+    THREAD.description = $("#description").val();
+    $("#d-description").html('<span>' + THREAD.description + '</span>');
     THREAD.version = $("#version").val();
     $("#d-version").html('Version: '+'<span>' + THREAD.version + '</span>');
 
