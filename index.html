@@ -36,15 +36,15 @@
                         <!-- Compatibility -->
                         <h6 style="margin-top:25px;">Compatibility</h6>
                         <div class="col-12">
-                            1.16 <input type="checkbox" id="v_1_16" value="">
-                            1.15 <input type="checkbox" id="v_1_15" value="">
-                            1.14 <input type="checkbox" id="v_1_14" value="">
-                            1.13 <input type="checkbox" id="v_1_13" value="">
-                            1.12 <input type="checkbox" id="v_1_12" value="">
-                            1.11 <input type="checkbox" id="v_1_11" value="">
-                            1.10 <input type="checkbox" id="v_1_10" value="">
-                            1.9 <input type="checkbox" id="v_1_9" value="">
-                            1.8 <input type="checkbox" id="v_1_8" value="">
+                            <span id="label_v_1_16">1.16</span> <input type="checkbox" id="v_1_16" value="">
+                            <span id="label_v_1_15">1.15</span> <input type="checkbox" id="v_1_15" value="">
+                            <span id="label_v_1_14">1.14</span> <input type="checkbox" id="v_1_14" value="">
+                            <span id="label_v_1_13">1.13</span> <input type="checkbox" id="v_1_13" value="">
+                            <span id="label_v_1_12">1.12</span> <input type="checkbox" id="v_1_12" value="">
+                            <span id="label_v_1_11">1.11</span> <input type="checkbox" id="v_1_11" value="">
+                            <span id="label_v_1_10">1.10</span> <input type="checkbox" id="v_1_10" value="">
+                            <span id="label_v_1_9">1.9</span> <input type="checkbox" id="v_1_9" value="">
+                            <span id="label_v_1_8">1.8</span> <input type="checkbox" id="v_1_8" value="">
                         </div>
                         <!-- Commands -->
 
@@ -62,6 +62,7 @@
                             </div>
                         </div>
                         <button type="button" id="finish" class="btn btn-outline-success" onclick="finishThread()">Finish</button>
+                        <button type="button" id="load-bt" class="btn btn-outline-dark" onclick="load()">Load</button>
                         <button type="button" id="capture-bt" class="btn btn-outline-dark">Capture</button>
                     </div>
                 </form>

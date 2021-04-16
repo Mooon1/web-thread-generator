@@ -7,6 +7,28 @@ let THREAD = {
     ]
 };
 
+function load() {
+    let name = $("#name").val();
+
+    $.ajax({
+        type        : "GET",
+        url         : "/api/index.php?thread=" + name,
+        beforeSend: function() {
+            // setting a timeout
+        },
+    }).done(function(data) {
+        $("#name").val(data.data.name);
+        $("#version").val(data.data.version);
+        $("#label_v_1_16").val(data.data.supportedVersions[0].version);
+        let vi = 0;
+        for (let v in VERSIONS){
+            $('#v_' + VERSIONS[v].replace(".", "_")).prop('checked', data.data.supportedVersions[vi].supported);
+            $("#label_v_" + VERSIONS[v].replace(".", "_")).val(data.data.supportedVersions[vi].version);
+            ++vi;
+        }
+    });
+}
+
 function createCommandForm() {
     let counter = parseInt($("#commands-counter").html());
 
