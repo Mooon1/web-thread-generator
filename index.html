@@ -57,6 +57,7 @@
                             </div>
                             <div class="col-12">
                                 <input type="text" id="command-1" placeholder="/example <uuid> <itemid> <amount>" style="width:100%;">
+                                <input type="text" id="command-permission-1" placeholder="plugin.command.example" style="width:100%;">
                                 <textarea id="command-desc-1" style="width:100%;height:100px;" placeholder="Describe the usage of the commands."></textarea>
                             </div>
                         </div>
@@ -70,7 +71,20 @@
                 <h1 class="display-4" id="d-name"></h1>
                 <h3>Supported Versions</h3>
                 <div class="row" id="supported-versions">
-<!--                    <div class="col-1"><span class="badge bg-success">1.16</span></div>-->
+                </div>
+                <h3>Commands</h3>
+                <div id="commands" class="card-group">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Command</th>
+                            <th scope="col">Description</th>
+                            <th scope="col">Permission</th>
+                        </tr>
+                        </thead>
+                        <tbody id="commands-table">
+                        </tbody>
+                    </table>
                 </div>
             </div>
             <div class="col-3"></div>

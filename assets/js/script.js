@@ -1,5 +1,5 @@
-let HOST = 'http://localhost:8000';
 let VERSIONS = ['1.16', '1.15', '1.14', '1.13', '1.12', '1.11', '1.10', '1.9', '1.8'];
+let COMMANDS = 1;
 let THREAD = {
     name: 'Some name',
     version: '1.0.0',
@@ -9,13 +9,14 @@ let THREAD = {
 
 function createCommandForm() {
     let counter = parseInt($("#commands-counter").html());
-    let html = $("#commands-form").html() + '<div class="col-12">\n' +
-        '                                <input type="text" id="command-"' + counter + ' placeholder="/example <uuid> <itemid> <amount>" style="width:100%;">\n' +
-        '                                <textarea id="command-desc-' + counter + '" style="width:100%;height:100px;" placeholder="Describe the usage of the commands."></textarea>\n' +
-        '                            </div>';
 
-    $("#commands-form").html(html);
+    $("#commands-form").append('<div class="col-12">\n' +
+        '                                <input type="text" id="command-"' + counter + ' placeholder="/example <uuid> <itemid> <amount>" style="width:100%;">\n' +
+        '                                <input type="text" id="command-permission-"' + counter + ' placeholder="/example <uuid> <itemid> <amount>" style="width:100%;">\n' +
+        '                                <textarea id="command-desc-' + counter + '" style="width:100%;height:100px;" placeholder="Describe the usage of the commands."></textarea>\n' +
+        '                            </div>');
     $("#commands-counter").html(counter+1);
+    COMMANDS = COMMANDS + 1;
 };
 
 function finishThread() {
@@ -36,6 +37,18 @@ function finishThread() {
         });
         supportedVersionsStr += versionVal ? '<div class="col-1"><h3><span class="badge rounded-pill bg-success">' + VERSIONS[v] + '</span></h3></div>' : '<div class="col-1"><h3><span class="badge rounded-pill bg-danger">' + VERSIONS[v] + '</span></h3></div>';
     }
+
+    let commandStr = '';
+
+    for(let i = 1;i <= COMMANDS;++i){
+        commandStr += ' <tr>\n' +
+        '                            <td><b>' + $("#command-" + i).val() + '</b></td>\n' +
+        '                            <td style="color:#aaa;">' + $("#command-desc-" + i).val() + '</td>\n' +
+        '                            <td style="color:#aa8684;">' + $("#command-permission-" + i).val() + '</td>\n' +
+        '                        </tr>';
+    }
+
+    $("#commands-table").html(commandStr);
 
     $("#supported-versions").html(supportedVersionsStr);
 
