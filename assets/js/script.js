@@ -1,10 +1,11 @@
 let VERSIONS = ['1.16', '1.15', '1.14', '1.13', '1.12', '1.11', '1.10', '1.9', '1.8'];
-let COMMANDS = 1;
+let COMMANDS = 0;
 let THREAD = {
     name: 'Some name',
     version: '1.0.0',
     supportedVersions: [
-    ]
+    ],
+    commands: []
 };
 
 function load() {
@@ -17,6 +18,7 @@ function load() {
             // setting a timeout
         },
     }).done(function(data) {
+        data = JSON.parse(data);
         $("#name").val(data.data.name);
         $("#version").val(data.data.version);
         $("#label_v_1_16").val(data.data.supportedVersions[0].version);
@@ -26,20 +28,33 @@ function load() {
             $("#label_v_" + VERSIONS[v].replace(".", "_")).val(data.data.supportedVersions[vi].version);
             ++vi;
         }
+
+        for(let c in data.data.commands){
+            let cmd = data.data.commands[c];
+            createCommandFormWithValues(cmd.command, cmd.description, cmd.permission);
+        }
     });
 }
 
-function createCommandForm() {
-    let counter = parseInt($("#commands-counter").html());
-
+function createCommandFormWithValues(command, desc, perm) {
     $("#commands-form").append('<div class="col-12">\n' +
-        '                                <input type="text" id="command-"' + counter + ' placeholder="/example <uuid> <itemid> <amount>" style="width:100%;">\n' +
-        '                                <input type="text" id="command-permission-"' + counter + ' placeholder="/example <uuid> <itemid> <amount>" style="width:100%;">\n' +
-        '                                <textarea id="command-desc-' + counter + '" style="width:100%;height:100px;" placeholder="Describe the usage of the commands."></textarea>\n' +
+        '                                <input type="text" id="command-' + COMMANDS + '" value="' + command + '" style="width:100%;">\n' +
+        '                                <input type="text" id="command-permission-' + COMMANDS + '" value="' + desc + '" style="width:100%;">\n' +
+        '                                <textarea id="command-desc-' + COMMANDS + '">' + perm + '</textarea>\n' +
         '                            </div>');
-    $("#commands-counter").html(counter+1);
-    COMMANDS = COMMANDS + 1;
-};
+    COMMANDS++;
+    $("#commands-counter").html(COMMANDS);
+}
+
+function createCommandForm() {
+    $("#commands-form").append('<div class="col-12">\n' +
+        '                                <input type="text" id="command-' + COMMANDS + '" placeholder="/example <uuid> <itemid> <amount>" style="width:100%;">\n' +
+        '                                <input type="text" id="command-permission-' + COMMANDS + '" placeholder="/example <uuid> <itemid> <amount>" style="width:100%;">\n' +
+        '                                <textarea id="command-desc-' + COMMANDS + '" style="width:100%;height:100px;" placeholder="Describe the usage of the commands."></textarea>\n' +
+        '                            </div>');
+    COMMANDS++;
+    $("#commands-counter").html(COMMANDS);
+}
 
 function finishThread() {
     THREAD.name = $("#name").val();
@@ -62,14 +77,19 @@ function finishThread() {
 
     let commandStr = '';
 
-    for(let i = 1;i <= COMMANDS;++i){
+    for(let i = 0;i < COMMANDS;i++){
+        THREAD.commands[i] = {
+            "command": $("#command-" + i).val(),
+            "description": $("#command-desc-" + i).val(),
+            "permission": $("#command-permission-" + i).val(),
+        };
+
         commandStr += ' <tr>\n' +
-        '                            <td><b>' + $("#command-" + i).val() + '</b></td>\n' +
-        '                            <td style="color:#aaa;">' + $("#command-desc-" + i).val() + '</td>\n' +
-        '                            <td style="color:#aa8684;">' + $("#command-permission-" + i).val() + '</td>\n' +
+        '                            <td><b>' + THREAD.commands[i].command + '</b></td>\n' +
+        '                            <td style="color:#aaa;">' + THREAD.commands[i].description + '</td>\n' +
+        '                            <td style="color:#aa8684;">' + THREAD.commands[i].permission + '</td>\n' +
         '                        </tr>';
     }
-
     $("#commands-table").html(commandStr);
 
     $("#supported-versions").html(supportedVersionsStr);
@@ -85,4 +105,4 @@ function finishThread() {
         },
     }).done(function(data) {
     });
-};
+}
