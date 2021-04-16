@@ -1,0 +1,25 @@
+{
+  "name": "web-thread-generator",
+  "version": "1.0.0",
+  "description": "- log to get old values from last thread design incase we need a new one\r - autogenerate fields ie for command",
+  "main": "index.html",
+  "dependencies": {
+    "bootstrap": "^4.6.0",
+    "dom-to-image": "^2.6.0",
+    "jquery": "^3.6.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Mooon1/web-thread-generator.git"
+  },
+  "author": "strawhats.dev",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Mooon1/web-thread-generator/issues"
+  },
+  "homepage": "https://github.com/Mooon1/web-thread-generator#readme"
+}

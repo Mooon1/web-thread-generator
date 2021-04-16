@@ -19,10 +19,10 @@ function createCommandForm() {
 };
 
 function finishThread() {
-    THREAD.name = $("#d-name").html();
+    THREAD.name = $("#name").val();
     $("#d-name").html(THREAD.name+'<span>' + $("#name").val() + '</span>');
-    THREAD.version = $("#d-version").html();
-    $("#d-version").html(THREAD.version+'<span>' + $("#version").val() + '</span>');
+    THREAD.version = $("#version").val();
+    $("#d-version").html('Version: '+'<span>' + THREAD.version + '</span>');
 
     THREAD.supportedVersions = [];
     let supportedVersionsStr = '';
@@ -38,6 +38,8 @@ function finishThread() {
     }
 
     $("#supported-versions").html(supportedVersionsStr);
+
+    $("#screen").fadeIn(100);
 
     $.ajax({
         type        : "POST",
