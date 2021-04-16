@@ -1,3 +1,4 @@
+let HOST = 'http://localhost:8000';
 let VERSIONS = ['1.16', '1.15', '1.14', '1.13', '1.12', '1.11', '1.10', '1.9', '1.8'];
 let THREAD = {
     name: 'Some name',
@@ -37,5 +38,14 @@ function finishThread() {
     }
 
     $("#supported-versions").html(supportedVersionsStr);
-    console.log(THREAD);
+
+    $.ajax({
+        type        : "POST",
+        url         : "/api/index.php",
+        data        : THREAD,
+        beforeSend: function() {
+            // setting a timeout
+        },
+    }).done(function(data) {
+    });
 };
