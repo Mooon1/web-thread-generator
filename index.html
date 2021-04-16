@@ -24,8 +24,12 @@
                 <div class="spacer"></div>
                 <form id="thread-form">
                     <div id="buttons" class="row">
+                        <div class="col-12" style="margin-bottom:15px;">
+                            <input type="file" id="localfile" name="files[]" onchange="loadFile()">
+                        </div>
                         <div class="col-12">
-                            <button type="button" id="finish" class="btn btn-success" onclick="finishThread(true)">Finish</button>
+                            <button type="button" id="finish" class="btn btn-success" onclick="finishThread(true, false)">Save</button>
+                            <button type="button" id="generate" class="btn btn-success" onclick="finishThread(false, true)">Generate</button>
                             <button type="button" id="load-bt" class="btn btn-dark" onclick="load()">Load</button>
                             <button type="button" id="capture-bt" class="btn btn-warning">Capture</button>
                         </div>

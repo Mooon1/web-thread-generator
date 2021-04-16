@@ -11,6 +11,46 @@ let THREAD = {
     commands: []
 };
 
+function loadFile() {
+    let filelist = $('#localfile').prop('files');
+    if(0 < filelist.length){
+        let f = filelist[0];
+        let reader = new FileReader();
+
+        reader.readAsBinaryString(f);
+
+        reader.onloadend = function(){
+            THREAD = JSON.parse(reader.result);
+            $("#name").val(THREAD.name);
+            $("#version").val(THREAD.version);
+            $("#description").val(THREAD.description);
+            for (let v in VERSIONS){
+                let supported = THREAD.supportedVersions[v].supported;
+
+                if("true" == supported){
+                    $('#v_' + VERSIONS[v].replace(".", "_")).prop('checked', true);
+                }else {
+                    $('#v_' + VERSIONS[v].replace(".", "_")).prop('checked', false);
+                }
+
+                $("#label_v_" + VERSIONS[v].replace(".", "_")).val(THREAD.supportedVersions[v].version);
+            }
+
+            for(let c in THREAD.commands){
+                let cmd = THREAD.commands[c];
+                createCommandFormWithValues(cmd.command, cmd.description, cmd.permission);
+            }
+
+            for(let f in THREAD.features){
+                let featr = THREAD.features[f];
+                createFeatureFormWithValues(featr.title, featr.description);
+            }
+
+            finishThread(false, false);
+        }
+    }
+}
+
 function load() {
     let name = $("#name").val();
 
@@ -47,7 +87,7 @@ function load() {
             createFeatureFormWithValues(featr.title, featr.description);
         }
 
-        finishThread(false);
+        finishThread(false, false);
     });
 }
 
@@ -89,7 +129,7 @@ function createFeatureFormWithValues(title, desc) {
     $("#features-counter").html(FEATURES);
 }
 
-function finishThread(withSave) {
+function finishThread(withSave, withDownload) {
     THREAD.name = $("#name").val();
     $("#d-name").html('<span>' + THREAD.name + '</span>');
     THREAD.description = $("#description").val();
@@ -158,6 +198,11 @@ function finishThread(withSave) {
     $("#supported-versions").html(supportedVersionsStr);
 
     $("#screen").fadeIn(100);
+
+    if(true === withDownload){
+        window.open('app/dl.php?t=' + btoa(JSON.stringify(THREAD)), '_blank');
+        return;
+    }
 
     if(true === withSave){
         $.ajax({
