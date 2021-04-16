@@ -21,18 +21,24 @@ function load() {
         data = JSON.parse(data);
         $("#name").val(data.data.name);
         $("#version").val(data.data.version);
-        $("#label_v_1_16").val(data.data.supportedVersions[0].version);
-        let vi = 0;
         for (let v in VERSIONS){
-            $('#v_' + VERSIONS[v].replace(".", "_")).prop('checked', data.data.supportedVersions[vi].supported);
-            $("#label_v_" + VERSIONS[v].replace(".", "_")).val(data.data.supportedVersions[vi].version);
-            ++vi;
+            let supported = data.data.supportedVersions[v].supported;
+
+            if("true" == supported){
+                $('#v_' + VERSIONS[v].replace(".", "_")).prop('checked', true);
+            }else {
+                $('#v_' + VERSIONS[v].replace(".", "_")).prop('checked', false);
+            }
+
+            $("#label_v_" + VERSIONS[v].replace(".", "_")).val(data.data.supportedVersions[v].version);
         }
 
         for(let c in data.data.commands){
             let cmd = data.data.commands[c];
             createCommandFormWithValues(cmd.command, cmd.description, cmd.permission);
         }
+
+        finishThread(false);
     });
 }
 
@@ -56,9 +62,9 @@ function createCommandForm() {
     $("#commands-counter").html(COMMANDS);
 }
 
-function finishThread() {
+function finishThread(withSave) {
     THREAD.name = $("#name").val();
-    $("#d-name").html(THREAD.name+'<span>' + $("#name").val() + '</span>');
+    $("#d-name").html('<span>' + THREAD.name + '</span>');
     THREAD.version = $("#version").val();
     $("#d-version").html('Version: '+'<span>' + THREAD.version + '</span>');
 
@@ -96,13 +102,15 @@ function finishThread() {
 
     $("#screen").fadeIn(100);
 
-    $.ajax({
-        type        : "POST",
-        url         : "/api/index.php",
-        data        : THREAD,
-        beforeSend: function() {
-            // setting a timeout
-        },
-    }).done(function(data) {
-    });
+    if(true === withSave){
+        $.ajax({
+            type        : "POST",
+            url         : "/api/index.php",
+            data        : THREAD,
+            beforeSend: function() {
+                // setting a timeout
+            },
+        }).done(function(data) {
+        });
+    }
 }
