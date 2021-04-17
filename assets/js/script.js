@@ -1,96 +1,3 @@
-let VERSIONS = ['1.16', '1.15', '1.14', '1.13', '1.12', '1.11', '1.10', '1.9', '1.8'];
-let COMMANDS = 0;
-let FEATURES = 0;
-let THREAD = {
-    name: 'Some name',
-    version: '1.0.0',
-    description: 'Enter a plugin description.',
-    supportedVersions: [
-    ],
-    features: [],
-    commands: []
-};
-
-function loadFile() {
-    let filelist = $('#localfile').prop('files');
-    if(0 < filelist.length){
-        let f = filelist[0];
-        let reader = new FileReader();
-
-        reader.readAsBinaryString(f);
-
-        reader.onloadend = function(){
-            THREAD = JSON.parse(reader.result);
-            $("#name").val(THREAD.name);
-            $("#version").val(THREAD.version);
-            $("#description").val(THREAD.description);
-            for (let v in VERSIONS){
-                let supported = THREAD.supportedVersions[v].supported;
-
-                if("true" == supported){
-                    $('#v_' + VERSIONS[v].replace(".", "_")).prop('checked', true);
-                }else {
-                    $('#v_' + VERSIONS[v].replace(".", "_")).prop('checked', false);
-                }
-
-                $("#label_v_" + VERSIONS[v].replace(".", "_")).val(THREAD.supportedVersions[v].version);
-            }
-
-            for(let c in THREAD.commands){
-                let cmd = THREAD.commands[c];
-                createCommandFormWithValues(cmd.command, cmd.description, cmd.permission);
-            }
-
-            for(let f in THREAD.features){
-                let featr = THREAD.features[f];
-                createFeatureFormWithValues(featr.title, featr.description);
-            }
-
-            finishThread(false, false);
-        }
-    }
-}
-
-function load() {
-    let name = $("#name").val();
-
-    $.ajax({
-        type        : "GET",
-        url         : "app/index.php?thread=" + name,
-        beforeSend: function() {
-            // setting a timeout
-        },
-    }).done(function(data) {
-        THREAD = JSON.parse(data).data;
-        $("#name").val(THREAD.name);
-        $("#version").val(THREAD.version);
-        $("#description").val(THREAD.description);
-        for (let v in VERSIONS){
-            let supported = THREAD.supportedVersions[v].supported;
-
-            if("true" == supported){
-                $('#v_' + VERSIONS[v].replace(".", "_")).prop('checked', true);
-            }else {
-                $('#v_' + VERSIONS[v].replace(".", "_")).prop('checked', false);
-            }
-
-            $("#label_v_" + VERSIONS[v].replace(".", "_")).val(THREAD.supportedVersions[v].version);
-        }
-
-        for(let c in THREAD.commands){
-            let cmd = THREAD.commands[c];
-            createCommandFormWithValues(cmd.command, cmd.description, cmd.permission);
-        }
-
-        for(let f in THREAD.features){
-            let featr = THREAD.features[f];
-            createFeatureFormWithValues(featr.title, featr.description);
-        }
-
-        finishThread(false, false);
-    });
-}
-
 function createCommandFormWithValues(command, desc, perm) {
     $("#commands-form").append('<div class="col-12">\n' +
         '                                <input type="text" id="command-' + COMMANDS + '" value="' + command + '" style="width:100%;">\n' +
@@ -129,7 +36,8 @@ function createFeatureFormWithValues(title, desc) {
     $("#features-counter").html(FEATURES);
 }
 
-function finishThread(withSave, withDownload) {
+function finishThread(withDownload, asPrint) {
+    asPrint = typeof asPrint != "undefined";
     THREAD.name = $("#name").val();
     $("#d-name").html('<span>' + THREAD.name + '</span>');
     THREAD.description = $("#description").val();
@@ -204,15 +112,7 @@ function finishThread(withSave, withDownload) {
         return;
     }
 
-    if(true === withSave){
-        $.ajax({
-            type        : "POST",
-            url         : "app/index.php",
-            data        : THREAD,
-            beforeSend: function() {
-                // setting a timeout
-            },
-        }).done(function(data) {
-        });
+    if(true === asPrint){
+        window.open('app/print.php?t=' + btoa(JSON.stringify(THREAD)), '_blank');
     }
 }

@@ -14,6 +14,9 @@
     <script type="text/javascript" src="node_modules/dom-to-image/dist/dom-to-image.min.js"></script>
 
     <script type="text/javascript" src="assets/js/script.js"></script>
+    <script type="text/javascript" src="assets/js/values.js"></script>
+    <script type="text/javascript" src="assets/js/func/loadFile.js"></script>
+    <script type="text/javascript" src="assets/js/func/load.js"></script>
 </head>
 <body>
     <div id="capture"></div>
@@ -28,10 +31,10 @@
                             <input type="file" id="localfile" name="files[]" onchange="loadFile()">
                         </div>
                         <div class="col-12">
-                            <button type="button" id="finish" class="btn btn-success" onclick="finishThread(true, false)">Save</button>
-                            <button type="button" id="generate" class="btn btn-success" onclick="finishThread(false, true)">Generate</button>
-                            <button type="button" id="load-bt" class="btn btn-dark" onclick="load()">Load</button>
+                            <button type="button" id="finish-bt" class="btn btn-success" onclick="finishThread(false)">Finish</button>
                             <button type="button" id="capture-bt" class="btn btn-warning">Capture</button>
+                            <button type="button" id="download-bt" class="btn btn-primary" onclick="finishThread(true)">Download</button>
+                            <button type="button" id="print-bt" class="btn btn-primary" onclick="finishThread(false, true)">Print</button>
                         </div>
                     </div>
                     <div class="row">
