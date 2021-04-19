@@ -122,7 +122,8 @@
                     </div>
                     <div class="col-12">
                         <button type="button" id="finish-bt" class="btn btn-success" onclick="finishThread(false)">Finish</button>
-                        <button type="button" id="capture-bt" class="btn btn-warning">Capture</button>
+                        <button type="button" id="capture-bt" class="btn btn-warning">Capture Screen</button>
+                        <button type="button" id="capture-logo-bt" class="btn btn-warning">Capture Logo</button>
                         <button type="button" id="download-bt" class="btn btn-primary" onclick="finishThread(true)">Download</button>
                         <button type="button" id="print-bt" class="btn btn-primary" onclick="finishThread(false, true)">Print</button>
                     </div>
@@ -136,6 +137,29 @@
             $('#non-capture').show();
             $('#capture').hide();
             var node = document.getElementById('screen');
+
+            domtoimage.toPng(node, {
+                bgcolor: '#fff'
+            })
+                .then(function (dataUrl) {
+                    var img = new Image();
+                    img.src = dataUrl;
+                    document.getElementById('capture').appendChild(img);
+                    $('#non-capture').slideUp(function () {
+                        $('#capture').slideDown(100);
+                    });
+
+                    $('#capture').css('z-index', 10);
+                })
+                .catch(function (error) {
+                    console.error('oops, something went wrong!', error);
+                });
+        });
+
+        $('#capture-logo-bt').on('click', function () {
+            $('#non-capture').show();
+            $('#capture').hide();
+            var node = document.getElementById('icon');
 
             domtoimage.toPng(node, {
                 bgcolor: '#fff'

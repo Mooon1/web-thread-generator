@@ -1,8 +1,8 @@
 function createCommandFormWithValues(command, desc, perm) {
     $("#commands-form").append('<div class="col-12">\n' +
         '                                <input type="text" id="command-' + COMMANDS + '" value="' + command + '" style="width:100%;">\n' +
-        '                                <input type="text" id="command-permission-' + COMMANDS + '" value="' + desc + '" style="width:100%;">\n' +
-        '                                <textarea id="command-desc-' + COMMANDS + '">' + perm + '</textarea>\n' +
+        '                                <input type="text" id="command-permission-' + COMMANDS + '" value="' + perm + '" style="width:100%;">\n' +
+        '                                <textarea id="command-desc-' + COMMANDS + '">' + desc + '</textarea>\n' +
         '                            </div>');
     COMMANDS++;
     $("#commands-counter").html(COMMANDS);
